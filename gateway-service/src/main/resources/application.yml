@@ -1,0 +1,52 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        file-extension: yaml
+    sentinel:
+      transport:
+        dashboard: localhost:8080  # Sentinel 控制台地址
+      eager: true  # 取消控制台懒加载
+  config:
+    import: optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+
+dubbo:
+  application:
+    name: gateway-service
+  protocol:
+    name: dubbo
+    port: 30000
+  registry:
+    address: nacos://localhost:8848
+  consumer:
+    timeout: 3000
+    version: 1.0.0
+    check: false
+  scan:
+    base-packages: com.shop.gateway.service
+
+sentinel:
+  flow:
+    rules:
+      - resource: payment.charge
+        count: 1  # 先设置一个较小的值便于测试
+        grade: 1  # QPS限流
+        controlBehavior: 0  # 直接拒绝
+        warmUpPeriodSec: 10
+        maxQueueingTimeMs: 500
+
+traffic:
+  color:
+    ipColorRules:
+      - "127.0.0.1/32=gray"
+      - "192.168.0.0/16=gray"
+      - "10.0.0.0/8=gray"
+      - "172.16.0.0/12=gray"

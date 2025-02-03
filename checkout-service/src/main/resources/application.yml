@@ -1,0 +1,59 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: checkout-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        file-extension: yaml
+  config:
+    import: optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://rm-bp1x6y6u8589d251tto.mysql.rds.aliyuncs.com:3306/shop_db?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: shop_user
+    password: efEwiuofbw!!
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 10
+      connection-timeout: 30000
+      max-lifetime: 1800000
+      keepalive-time: 30000
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: 123456
+      database: 0
+      timeout: 5000
+      lettuce:
+        pool:
+          enabled: true
+          max-active: 50
+          max-idle: 20
+          min-idle: 10
+          max-wait: 5000
+        shutdown-timeout: 500
+
+dubbo:
+  application:
+    name: ${spring.application.name}
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: nacos://localhost:8848
+  consumer:
+    check: false
+    timeout: 3000
+    version: 1.0.0
+  provider:
+    timeout: 3000
+    version: 1.0.0
+    tag: gray
