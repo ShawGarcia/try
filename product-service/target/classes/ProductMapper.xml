@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shop.product.mapper.ProductMapper">
+
+    <select id="listProducts" resultType="com.shop.common.service.product.Product">
+        SELECT * FROM products
+        <where>
+            <if test="categoryName != null">
+                AND category_name = #{categoryName}
+            </if>
+        </where>
+        LIMIT #{pageSize} OFFSET #{page}
+    </select>
+
+    <select id="getProductById" resultType="com.shop.common.service.product.Product">
+        SELECT * FROM products WHERE id = #{id}
+    </select>
+
+    <select id="searchProducts" resultType="com.shop.common.service.product.Product">
+        SELECT * FROM products WHERE name LIKE CONCAT('%', #{query}, '%')
+    </select>
+
+</mapper>
