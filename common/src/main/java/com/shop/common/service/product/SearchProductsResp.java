@@ -7,4 +7,6 @@ import java.util.List;
 @Data
 public class SearchProductsResp {
     private List<Product> results;
-} 
+
+
+}
