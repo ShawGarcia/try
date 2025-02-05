@@ -6,7 +6,5 @@ import java.util.List;
 
 @Data
 public class SearchProductsResp {
-    private List<Product> results;
-
-
-}
+    private List<AddProductReq> results;
+} 

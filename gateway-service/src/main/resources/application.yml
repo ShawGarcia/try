@@ -42,11 +42,3 @@ sentinel:
         controlBehavior: 0  # 直接拒绝
         warmUpPeriodSec: 10
         maxQueueingTimeMs: 500
-
-traffic:
-  color:
-    ipColorRules:
-      - "127.0.0.1/32=gray"
-      - "192.168.0.0/16=gray"
-      - "10.0.0.0/8=gray"
-      - "172.16.0.0/12=gray"

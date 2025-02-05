@@ -5,7 +5,7 @@
 
 <mapper namespace="com.shop.product.mapper.ProductMapper">
 
-    <select id="listProducts" resultType="com.shop.common.service.product.Product">
+    <select id="listProducts" resultType="com.shop.common.service.product.AddProductReq">
         SELECT * FROM products
         <where>
             <if test="categoryName != null">
@@ -15,11 +15,11 @@
         LIMIT #{pageSize} OFFSET #{page}
     </select>
 
-    <select id="getProductById" resultType="com.shop.common.service.product.Product">
+    <select id="getProductById" resultType="com.shop.common.service.product.AddProductReq">
         SELECT * FROM products WHERE id = #{id}
     </select>
 
-    <select id="searchProducts" resultType="com.shop.common.service.product.Product">
+    <select id="searchProducts" resultType="com.shop.common.service.product.AddProductReq">
         SELECT * FROM products WHERE name LIKE CONCAT('%', #{query}, '%')
     </select>
 

@@ -7,11 +7,11 @@ import java.util.List;
 
 @Data
 @Builder
-public class Product {
+public class AddProductReq {
     private Long id;
     private String name;
     private String description;
     private String picture;
-    private Float price;
+    private Double price;
     private List<String> categories;
 } 

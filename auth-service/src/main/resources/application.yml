@@ -18,12 +18,7 @@ spring:
     url: jdbc:mysql://rm-bp1x6y6u8589d251tto.mysql.rds.aliyuncs.com:3306/shop_db?useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: shop_user
     password: efEwiuofbw!!
-    hikari:
-      maximum-pool-size: 10
-      minimum-idle: 10
-      connection-timeout: 30000
-      max-lifetime: 1800000
-      keepalive-time: 30000
+    type: com.alibaba.druid.pool.DruidDataSource
   data:
     redis:
       host: localhost
@@ -33,12 +28,10 @@ spring:
       timeout: 5000
       lettuce:
         pool:
-          enabled: true
-          max-active: 50
-          max-idle: 20
-          min-idle: 10
-          max-wait: 5000
-        shutdown-timeout: 500
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 2000
 
 dubbo:
   application:

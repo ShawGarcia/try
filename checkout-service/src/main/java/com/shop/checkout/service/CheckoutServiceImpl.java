@@ -1,6 +1,5 @@
 package com.shop.checkout.service;
 
-import org.apache.dubbo.common.constants.CommonConstants;
 import com.shop.common.exception.CheckoutException;
 import com.shop.common.service.cart.*;
 import com.shop.common.service.checkout.CheckoutReq;
@@ -16,7 +15,6 @@ import com.shop.common.service.product.ProductCatalogService;
 import jakarta.validation.Valid;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.apache.dubbo.rpc.RpcContext;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -121,10 +119,5 @@ public class CheckoutServiceImpl implements CheckoutService {
                     .orderId(placeOrderResp.getOrderId())
                     .transactionId(chargeResp.getTransactionId())
                     .build();
-    }
-
-    @Override
-    public String testGray() {
-        return RpcContext.getCurrentServiceContext().getAttachment(CommonConstants.TAG_KEY);
     }
 }

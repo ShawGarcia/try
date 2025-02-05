@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
-import java.util.concurrent.Executor;
 
 @DubboService
 @Slf4j
@@ -35,9 +34,6 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Resource
     private CreditCardValidationService creditCardValidationService;
-
-    @Resource(name = "asyncServiceExecutor")
-    private Executor asyncPaymentExecutor;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -95,22 +91,15 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     private void savePaymentLog(ChargeReq request, String transactionId) {
-        asyncPaymentExecutor.execute(() -> {
-            try {
-                PaymentPo paymentPo = PaymentPo.builder()
-                        .userId(request.getUserId())
-                        .orderId(request.getOrderId())
-                        .transactionId(transactionId)
-                        .amount(BigDecimal.valueOf(request.getAmount()))
-                        .payAt(LocalDateTime.now())
-                        .createdAt(LocalDateTime.now())
-                        .updatedAt(LocalDateTime.now())
-                        .build();
-                paymentMapper.insert(paymentPo);
-                log.info("异步保存支付日志成功 - 交易号: {}", transactionId);
-            } catch (Exception e) {
-                log.error("异步保存支付日志失败 - 交易号: {}", transactionId, e);
-            }
-        });
+        PaymentPo paymentPo = PaymentPo.builder()
+                .userId(request.getUserId())
+                .orderId(request.getOrderId())
+                .transactionId(transactionId)
+                .amount(BigDecimal.valueOf(request.getAmount()))
+                .payAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+        paymentMapper.insert(paymentPo);
     }
 }

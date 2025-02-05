@@ -16,10 +16,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class ProductPo {
-    @TableId(type = com.baomidou.mybatisplus.annotation.IdType.AUTO)
-     Long id;
-     String productName;
-     BigDecimal price;
-     LocalDateTime createdAt;
-     LocalDateTime updatedAt;
+     @TableId(type = com.baomidou.mybatisplus.annotation.IdType.AUTO)
+     private Long id;
+     private String name;
+     private String description;
+     private String categoriesId;
+     private BigDecimal price;
+     private LocalDateTime createAt;
+     private LocalDateTime updateAt;
+     private Boolean isDeleted;
+     private LocalDateTime deleteAt;
 }

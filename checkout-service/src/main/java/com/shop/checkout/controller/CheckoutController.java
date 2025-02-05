@@ -1,6 +1,5 @@
 package com.shop.checkout.controller;
 
-import com.shop.common.entity.ApiResponse;
 import com.shop.common.service.checkout.CheckoutReq;
 import com.shop.common.service.checkout.CheckoutResp;
 import com.shop.common.service.checkout.CheckoutService;
@@ -22,8 +21,8 @@ public class CheckoutController {
      * @return
      */
     @PostMapping("/checkout")
-    public ApiResponse<CheckoutResp> checkout(@RequestBody CheckoutReq request) {
-        return ApiResponse.success(checkoutService.checkout(request));
+    public CheckoutResp checkout(@RequestBody CheckoutReq request) {
+        return checkoutService.checkout(request);
     }
 
     @GetMapping("/testElk")
